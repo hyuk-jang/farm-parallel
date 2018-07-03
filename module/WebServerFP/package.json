@@ -1,0 +1,50 @@
+{
+  "name": "controller",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "build-dev": "pkg -t latest-win-x64 -o . ./index.js",
+    "build-prod": "pkg -t latest-win-x64 -o . ./.prod/app.js"
+  },
+  "dependencies": {
+    "base-class-jh": "^1.0.17",
+    "base-model-jh": "^1.0.11",
+    "base-util-jh": "^1.1.6",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "cron": "^1.3.0",
+    "ejs": "^2.6.1",
+    "event-to-promise": "^0.8.0",
+    "express": "^4.16.3",
+    "express-async-handler": "^1.1.3",
+    "express-mysql-session": "^1.3.0",
+    "express-session": "^1.15.6",
+    "joi": "^13.4.0",
+    "lodash": "^4.17.10",
+    "method-override": "^2.3.10",
+    "moment": "^2.22.2",
+    "morgan": "^1.9.0",
+    "multer": "^1.3.0",
+    "mysql": "^2.15.0",
+    "node-gcm": "^0.14.10",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "request": "^2.87.0",
+    "serve-favicon": "^2.5.0",
+    "socket.io": "^2.1.1",
+    "split": "^1.0.1",
+    "underscore": "^1.9.1",
+    "xlsx": "^0.13.0"
+  },
+  "description": "염전 제어서버",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "smsoft",
+  "license": "ISC",
+  "pkg": {
+    "scripts": "public/**/*.js",
+    "assets": "views/**/*"
+  }
+}

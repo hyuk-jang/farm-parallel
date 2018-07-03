@@ -1,0 +1,361 @@
+CREATE TABLE `connector` (
+	`connector_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '접속반 정보 시퀀스',
+	`target_id` VARCHAR(6) NOT NULL COMMENT '접속반 id',
+	`target_alias` VARCHAR(20) NOT NULL COMMENT '접속반 명',
+	`target_category` VARCHAR(50) NULL DEFAULT NULL COMMENT '접속반 종류',
+	`connect_info` LONGTEXT NULL COMMENT '장치 접속 정보',
+	`protocol_info` LONGTEXT NULL COMMENT '장치 프로토콜 정보',
+	`serial_number` VARCHAR(100) NULL DEFAULT NULL COMMENT '고유 코드',
+	`model_name` VARCHAR(50) NULL DEFAULT NULL COMMENT '장치 명',
+	`director_name` VARCHAR(20) NULL DEFAULT NULL COMMENT '담당자',
+	`director_tel` VARCHAR(13) NULL DEFAULT NULL COMMENT '연락처',
+	PRIMARY KEY (`connector_seq`),
+	UNIQUE INDEX `UIX_CONNECTOR` (`target_id`)
+)
+COMMENT='접속반 상세 정보'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `connector_trouble_data` (
+	`connector_trouble_data_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '접속반 문제 이력 시퀀스',
+	`connector_seq` MEDIUMINT(9) NOT NULL COMMENT '접속반 정보 시퀀스',
+	`is_error` TINYINT(4) NULL DEFAULT NULL COMMENT '고장 여부',
+	`msg` VARCHAR(100) NULL DEFAULT NULL COMMENT '고장 내용',
+	`code` VARCHAR(100) NULL DEFAULT NULL COMMENT '고장 코드',
+	`occur_date` DATETIME NULL DEFAULT NULL COMMENT '발생 일자',
+	`fix_date` DATETIME NULL DEFAULT NULL COMMENT '해결 일자',
+	PRIMARY KEY (`connector_trouble_data_seq`, `connector_seq`),
+	INDEX `FK_CONNECTOR_TO_CONNECTOR_TROUBLE_DATA` (`connector_seq`),
+	CONSTRAINT `FK_CONNECTOR_TO_CONNECTOR_TROUBLE_DATA` FOREIGN KEY (`connector_seq`) REFERENCES `connector` (`connector_seq`)
+)
+COMMENT='장치에서 에러가 검출될 경우 발생 및 해결 정보 저장'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `data_logger` (
+	`data_logger_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '데이타 로거 시퀀스',
+	`main_seq` MEDIUMINT(9) NOT NULL COMMENT 'MAIN 시퀀스',
+	`target_id` VARCHAR(30) NULL DEFAULT NULL COMMENT '데이타 로거 id',
+	`connect_info` LONGTEXT NULL COMMENT '장치 접속 정보',
+	`protocol_info` LONGTEXT NULL COMMENT '장치 프로토콜 정보',
+	`code` VARCHAR(100) NULL DEFAULT NULL COMMENT '고유 코드',
+	PRIMARY KEY (`data_logger_seq`, `main_seq`),
+	INDEX `FK_MAIN_INFO_TO_DATA_LOGGER` (`main_seq`),
+	CONSTRAINT `FK_MAIN_INFO_TO_DATA_LOGGER` FOREIGN KEY (`main_seq`) REFERENCES `main_info` (`main_seq`)
+)
+COMMENT='데이타 로거'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `device_data` (
+	`device_data_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '장치 데이터 시퀀스',
+	`device_info_seq` MEDIUMINT(9) NOT NULL COMMENT '장비 정보 시퀀스',
+	`data` FLOAT NOT NULL COMMENT '장치 데이터',
+	`writedate` DATETIME NOT NULL COMMENT '입력일',
+	PRIMARY KEY (`device_data_seq`, `device_info_seq`),
+	INDEX `FK_DEVICE_INFO_TO_DEVICE_DATA` (`device_info_seq`),
+	CONSTRAINT `FK_DEVICE_INFO_TO_DEVICE_DATA` FOREIGN KEY (`device_info_seq`) REFERENCES `device_info` (`device_info_seq`)
+)
+COMMENT='장치 데이터'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `device_info` (
+	`device_info_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '장비 정보 시퀀스',
+	`data_logger_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT '데이타 로거 시퀀스',
+	`main_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT 'MAIN 시퀀스',
+	`device_location_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT '설치 장소 시퀀스',
+	`device_summary_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT '장치 구성 정보 시퀀스',
+	`target_id` VARCHAR(30) NOT NULL COMMENT '장치 id',
+	`target_alias` VARCHAR(20) NULL DEFAULT NULL COMMENT '장치 별명',
+	`is_bottom` TINYINT(4) NULL DEFAULT NULL COMMENT '장치 하부 여부',
+	`model_name` VARCHAR(50) NULL DEFAULT NULL COMMENT '장치 명',
+	`serial_number` VARCHAR(100) NULL DEFAULT NULL COMMENT '장치 고유 코드',
+	PRIMARY KEY (`device_info_seq`),
+	INDEX `FK_DEVICE_SUMMARY_TO_DEVICE_INFO` (`device_summary_seq`),
+	INDEX `FK_DEVICE_LOCATION_TO_DEVICE_INFO` (`device_location_seq`),
+	INDEX `FK_DATA_LOGGER_TO_DEVICE_INFO` (`data_logger_seq`, `main_seq`),
+	CONSTRAINT `FK_DATA_LOGGER_TO_DEVICE_INFO` FOREIGN KEY (`data_logger_seq`, `main_seq`) REFERENCES `data_logger` (`data_logger_seq`, `main_seq`),
+	CONSTRAINT `FK_DEVICE_LOCATION_TO_DEVICE_INFO` FOREIGN KEY (`device_location_seq`) REFERENCES `device_location` (`device_location_seq`),
+	CONSTRAINT `FK_DEVICE_SUMMARY_TO_DEVICE_INFO` FOREIGN KEY (`device_summary_seq`) REFERENCES `device_summary` (`device_summary_seq`)
+)
+COMMENT='장비 정보'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `device_location` (
+	`device_location_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '설치 장소 시퀀스',
+	`target_id` VARCHAR(50) NOT NULL COMMENT '장소 id',
+	`target_name` VARCHAR(20) NULL DEFAULT NULL COMMENT '장소 명',
+	`is_bottom` TINYINT(4) NOT NULL COMMENT '장치 위치 하부 여부',
+	PRIMARY KEY (`device_location_seq`),
+	UNIQUE INDEX `UIX_DEVICE_LOCATION` (`target_id`)
+)
+COMMENT='설치 장소'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `device_summary` (
+	`device_summary_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '장치 구성 정보 시퀀스',
+	`device_prefix` VARCHAR(4) NOT NULL COMMENT '장치 접두어',
+	`device_name` VARCHAR(30) NOT NULL COMMENT '장치 명',
+	`data_unit` VARCHAR(10) NOT NULL COMMENT '데이터 단위',
+	PRIMARY KEY (`device_summary_seq`),
+	UNIQUE INDEX `UIX_DEVICE_SUMMARY` (`device_prefix`)
+)
+COMMENT='장치 개요 정보'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `inverter` (
+	`inverter_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '인버터 정보 시퀀스',
+	`target_id` VARCHAR(6) NOT NULL COMMENT '인버터 id',
+	`target_alias` VARCHAR(20) NOT NULL COMMENT '인버터 별명',
+	`target_category` ENUM('Inveter','Sensor','Weathercast','Connector') NULL DEFAULT NULL COMMENT '장치 카테고리',
+	`protocol_info` LONGTEXT NULL COMMENT '장치 프로토콜 정보',
+	`connect_info` LONGTEXT NULL COMMENT '접속 정보',
+	`serial_number` VARCHAR(100) NULL DEFAULT NULL COMMENT '고유 코드',
+	`amount` FLOAT NULL DEFAULT NULL COMMENT '단위: Wh (10:1 Scale)',
+	`director_name` VARCHAR(20) NULL DEFAULT NULL COMMENT '담당자',
+	`director_tel` VARCHAR(13) NULL DEFAULT NULL COMMENT '연락처',
+	PRIMARY KEY (`inverter_seq`),
+	UNIQUE INDEX `UIX_INVERTER` (`target_id`)
+)
+COMMENT='인버터 장치 상세 정보'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `inverter_data` (
+	`inverter_data_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '인버터 데이터 시퀀스',
+	`inverter_seq` MEDIUMINT(9) NOT NULL COMMENT '인버터 정보 시퀀스',
+	`in_a` FLOAT NULL DEFAULT NULL COMMENT '10:1 Scale',
+	`in_v` FLOAT NULL DEFAULT NULL COMMENT '10:1 Scale',
+	`in_w` FLOAT NULL DEFAULT NULL COMMENT '입력 전력',
+	`out_a` FLOAT NULL DEFAULT NULL COMMENT '10:1 Scale',
+	`out_v` FLOAT NULL DEFAULT NULL COMMENT '10:1 Scale',
+	`out_w` FLOAT NULL DEFAULT NULL COMMENT '출력 전력',
+	`p_f` FLOAT NULL DEFAULT NULL COMMENT 'Power Factor (10:1 Scale)',
+	`d_wh` FLOAT NULL DEFAULT NULL COMMENT 'Daily Power, 단위:Wh (10:1 Scale)',
+	`c_wh` FLOAT NULL DEFAULT NULL COMMENT 'Cumulative Power, 단위:Wh (10:1 Scale)',
+	`writedate` DATETIME NULL DEFAULT NULL COMMENT '등록일',
+	PRIMARY KEY (`inverter_data_seq`, `inverter_seq`),
+	INDEX `FK_INVERTER_TO_INVERTER_DATA` (`inverter_seq`),
+	CONSTRAINT `FK_INVERTER_TO_INVERTER_DATA` FOREIGN KEY (`inverter_seq`) REFERENCES `inverter` (`inverter_seq`)
+)
+COMMENT='인버터에서 측정된 데이터'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `inverter_trouble_data` (
+	`inverter_trouble_data_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '인버터 문제 이력 시퀀스',
+	`inverter_seq` MEDIUMINT(9) NOT NULL COMMENT '인버터 정보 시퀀스',
+	`is_system_error` TINYINT(4) NULL DEFAULT NULL COMMENT 'isSystemError',
+	`msg` VARCHAR(100) NULL DEFAULT NULL COMMENT '고장 내용',
+	`code` VARCHAR(100) NULL DEFAULT NULL COMMENT '고장 코드',
+	`occur_date` DATETIME NULL DEFAULT NULL COMMENT '발생 일자',
+	`fix_date` DATETIME NULL DEFAULT NULL COMMENT '해결 일자',
+	PRIMARY KEY (`inverter_trouble_data_seq`, `inverter_seq`),
+	INDEX `FK_INVERTER_TO_INVERTER_TROUBLE_DATA` (`inverter_seq`),
+	CONSTRAINT `FK_INVERTER_TO_INVERTER_TROUBLE_DATA` FOREIGN KEY (`inverter_seq`) REFERENCES `inverter` (`inverter_seq`)
+)
+COMMENT='장치에서 에러가 검출될 경우 발생 및 해결 정보 저장'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `kma_data` (
+	`kma_data_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '기상청 일기 예보 시퀀스',
+	`x` TINYINT(3) NULL DEFAULT NULL COMMENT '위도',
+	`y` TINYINT(3) NULL DEFAULT NULL COMMENT '경도',
+	`temp` FLOAT NULL DEFAULT NULL COMMENT '℃',
+	`pty` TINYINT(4) NULL DEFAULT NULL COMMENT '(0 : 없음, 1:비, 2:비/눈, 3:눈/비, 4:눈)',
+	`pop` TINYINT(4) NULL DEFAULT NULL COMMENT '%',
+	`r12` FLOAT NULL DEFAULT NULL COMMENT 'mm (① 0 <= x < 0.1, ② 0.1 <= x < 1, ③ 1 <= x < 5, ④ 5 <= x < 10, ⑤ 10 <= x < 25, ⑥ 25 <= x < 50, ⑦ 50 <= x)',
+	`wf_kor` VARCHAR(20) NULL DEFAULT NULL COMMENT '① 맑음 ② 구름 조금 ③ 구름 많음 ④ 흐림 ⑤ 비 ⑥ 눈/비 ⑦ 눈',
+	`wf_en` VARCHAR(20) NULL DEFAULT NULL COMMENT '① Clear ② Partly Cloudy ③ Mostly Cloudy ④ Cloudy ⑤ Rain ⑥ Snow/Rain ⑦ Snow',
+	`ws` FLOAT NULL DEFAULT NULL COMMENT 'm/s',
+	`wd` TINYINT(4) NULL DEFAULT NULL COMMENT '풍향 0~7 (북, 북동, 동, 남동, 남, 남서, 서, 북서)',
+	`reh` FLOAT NULL DEFAULT NULL COMMENT '%',
+	`applydate` DATETIME NULL DEFAULT NULL COMMENT '적용시간',
+	`writedate` DATETIME NULL DEFAULT NULL COMMENT '작성일',
+	`updatedate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일',
+	PRIMARY KEY (`kma_data_seq`)
+)
+COMMENT='기상청에서 발표한 일기예보를 저장'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `main_info` (
+	`main_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT 'MAIN 시퀀스',
+	`weather_location_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT '기상청 정보 위치 시퀀스',
+	`name` VARCHAR(20) NULL DEFAULT NULL COMMENT '명칭',
+	`address` VARCHAR(100) NULL DEFAULT NULL COMMENT '주소',
+	`ip` VARCHAR(16) NULL DEFAULT NULL COMMENT '아이피',
+	`is_deleted` TINYINT(4) NULL DEFAULT NULL COMMENT '삭제여부',
+	`chart_color` VARCHAR(13) NULL DEFAULT NULL COMMENT '대시 보드 차트 색상',
+	`chart_sort_rank` TINYINT(4) NULL DEFAULT NULL COMMENT '대시 보드 차트 정렬 순위',
+	`writedate` DATETIME NULL DEFAULT NULL COMMENT '생성일',
+	`updatedate` TIMESTAMP NULL DEFAULT NULL COMMENT '수정일',
+	PRIMARY KEY (`main_seq`),
+	INDEX `FK_WEATHER_LOCATION_TO_MAIN_INFO` (`weather_location_seq`),
+	CONSTRAINT `FK_WEATHER_LOCATION_TO_MAIN_INFO` FOREIGN KEY (`weather_location_seq`) REFERENCES `weather_location` (`weather_location_seq`)
+)
+COMMENT='현장에 설치되는 서버.	 장치들과의 통신, 모바일 App과의 통신, 통합서버와의 통신 등을 수행함.'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `member` (
+	`member_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '회원정보 시퀀스',
+	`main_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT 'MAIN 시퀀스',
+	`id` VARCHAR(255) NOT NULL COMMENT '아이디',
+	`grade` ENUM('admin','manager','owner','guest') NULL DEFAULT NULL COMMENT '회원 등급',
+	`name` VARCHAR(20) NULL DEFAULT NULL COMMENT '이름',
+	`address` VARCHAR(100) NULL DEFAULT NULL COMMENT '주소',
+	`tel` VARCHAR(13) NULL DEFAULT NULL COMMENT '전화번호',
+	`password_temp` VARCHAR(20) NULL DEFAULT NULL,
+	`password_salt` VARCHAR(255) NULL DEFAULT NULL COMMENT '암호화소금',
+	`password` VARCHAR(255) NULL DEFAULT NULL COMMENT '암호화비밀번호',
+	`is_deleted` TINYINT(4) NULL DEFAULT NULL COMMENT '삭제여부',
+	`writedate` DATETIME NULL DEFAULT NULL COMMENT '생성일',
+	`updatedate` TIMESTAMP NULL DEFAULT NULL COMMENT '수정일',
+	PRIMARY KEY (`member_seq`),
+	UNIQUE INDEX `UIX_MEMBER` (`id`),
+	INDEX `FK_MAIN_INFO_TO_MEMBER` (`main_seq`),
+	CONSTRAINT `FK_MAIN_INFO_TO_MEMBER` FOREIGN KEY (`main_seq`) REFERENCES `main_info` (`main_seq`)
+)
+COMMENT='가입한 회원의 정보'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `photovoltaic` (
+	`photovoltaic_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '모듈 세부 정보 시퀀스',
+	`target_id` VARCHAR(6) NOT NULL COMMENT '모듈 id',
+	`target_alias` VARCHAR(20) NULL DEFAULT NULL COMMENT '모듈 별명',
+	`install_place` VARCHAR(50) NULL DEFAULT NULL COMMENT '설치장소',
+	`module_type` ENUM('normal','g2g') NULL DEFAULT NULL COMMENT '모듈 타입',
+	`compose_count` TINYINT(4) NULL DEFAULT NULL COMMENT '직렬구성 개수',
+	`amount` FLOAT NULL DEFAULT NULL COMMENT '단위: kW (10:1 Scale)',
+	`model_name` VARCHAR(50) NULL DEFAULT NULL COMMENT '장치 명',
+	`serial_number` VARCHAR(100) NULL DEFAULT NULL COMMENT '고유 코드',
+	`manufacturer` VARCHAR(20) NULL DEFAULT NULL COMMENT '제조사',
+	PRIMARY KEY (`photovoltaic_seq`),
+	UNIQUE INDEX `UIX_PHOTOVOLTAIC` (`target_id`)
+)
+COMMENT='수중 태양광 모듈 상세 정보'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `photovoltaic_data` (
+	`photovoltaic_data_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '접속반 데이터 시퀀스',
+	`photovoltaic_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT '모듈 세부 정보 시퀀스',
+	`amp` FLOAT NOT NULL COMMENT '10:1 Scale',
+	`vol` FLOAT NOT NULL COMMENT '10:1 Scale',
+	`writedate` DATETIME NOT NULL COMMENT '등록일',
+	PRIMARY KEY (`photovoltaic_data_seq`),
+	INDEX `FK_PHOTOVOLTAIC_TO_PHOTOVOLTAIC_DATA` (`photovoltaic_seq`),
+	CONSTRAINT `FK_PHOTOVOLTAIC_TO_PHOTOVOLTAIC_DATA` FOREIGN KEY (`photovoltaic_seq`) REFERENCES `photovoltaic` (`photovoltaic_seq`)
+)
+COMMENT='접속반에서 측정된 데이터'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `relation_device` (
+	`relation_device_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '장치 관계 시퀀스',
+	`main_seq` MEDIUMINT(9) NOT NULL COMMENT 'MAIN 시퀀스',
+	`device_info_seq` MEDIUMINT(9) NOT NULL COMMENT '장비 정보 시퀀스',
+	PRIMARY KEY (`relation_device_seq`, `main_seq`, `device_info_seq`),
+	INDEX `FK_DEVICE_INFO_TO_RELATION_DEVICE` (`device_info_seq`),
+	INDEX `FK_MAIN_INFO_TO_RELATION_DEVICE` (`main_seq`),
+	CONSTRAINT `FK_MAIN_INFO_TO_RELATION_DEVICE` FOREIGN KEY (`main_seq`) REFERENCES `main_info` (`main_seq`),
+	CONSTRAINT `FK_DEVICE_INFO_TO_RELATION_DEVICE` FOREIGN KEY (`device_info_seq`) REFERENCES `device_info` (`device_info_seq`)
+)
+COMMENT='장치 관계'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `relation_power` (
+	`relation_power_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '태양광발전 관계 정보 시퀀스',
+	`main_seq` MEDIUMINT(9) NOT NULL COMMENT 'MAIN 시퀀스',
+	`photovoltaic_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT '모듈 세부 정보 시퀀스',
+	`connector_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT '접속반 정보 시퀀스',
+	`inverter_seq` MEDIUMINT(9) NULL DEFAULT NULL COMMENT '인버터 정보 시퀀스',
+	`connector_ch` TINYINT(4) NULL DEFAULT NULL COMMENT '접속반 연결 채널',
+	PRIMARY KEY (`relation_power_seq`, `main_seq`),
+	INDEX `FK_INVERTER_TO_RELATION_POWER` (`inverter_seq`),
+	INDEX `FK_CONNECTOR_TO_RELATION_POWER` (`connector_seq`),
+	INDEX `FK_MAIN_INFO_TO_RELATION_POWER` (`main_seq`),
+	INDEX `FK_PHOTOVOLTAIC_TO_RELATION_POWER` (`photovoltaic_seq`),
+	CONSTRAINT `FK_PHOTOVOLTAIC_TO_RELATION_POWER` FOREIGN KEY (`photovoltaic_seq`) REFERENCES `photovoltaic` (`photovoltaic_seq`),
+	CONSTRAINT `FK_CONNECTOR_TO_RELATION_POWER` FOREIGN KEY (`connector_seq`) REFERENCES `connector` (`connector_seq`),
+	CONSTRAINT `FK_INVERTER_TO_RELATION_POWER` FOREIGN KEY (`inverter_seq`) REFERENCES `inverter` (`inverter_seq`),
+	CONSTRAINT `FK_MAIN_INFO_TO_RELATION_POWER` FOREIGN KEY (`main_seq`) REFERENCES `main_info` (`main_seq`)
+)
+COMMENT='태양광 계측 시스템 관계 정보'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `weather_device_data` (
+	`weather_device_data_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '기상관측장비 측정 정보 시퀀스',
+	`main_seq` MEDIUMINT(9) NOT NULL COMMENT 'MAIN 시퀀스',
+	`temp` INT(11) NULL DEFAULT NULL COMMENT '℃',
+	`reh` FLOAT NULL DEFAULT NULL COMMENT '%',
+	`wd` TINYINT(4) NULL DEFAULT NULL COMMENT '0~7 (북, 북동, 동, 남동, 남, 남서, 서, 북서)',
+	`ws` FLOAT NULL DEFAULT NULL COMMENT 'm/s',
+	`solar` FLOAT NULL DEFAULT NULL COMMENT 'W/mﾲ',
+	`writedate` DATETIME NULL DEFAULT NULL COMMENT '등록일',
+	PRIMARY KEY (`weather_device_data_seq`, `main_seq`),
+	INDEX `FK_MAIN_INFO_TO_WEATHER_DEVICE_DATA` (`main_seq`),
+	CONSTRAINT `FK_MAIN_INFO_TO_WEATHER_DEVICE_DATA` FOREIGN KEY (`main_seq`) REFERENCES `main_info` (`main_seq`)
+)
+COMMENT='기상관측장비로부터 수집한 데이터를 저장'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+
+CREATE TABLE `weather_location` (
+	`weather_location_seq` MEDIUMINT(9) NOT NULL AUTO_INCREMENT COMMENT '기상청 정보 위치 시퀀스',
+	`province` VARCHAR(50) NULL DEFAULT NULL COMMENT '도',
+	`city` VARCHAR(50) NULL DEFAULT NULL COMMENT '시',
+	`town` VARCHAR(50) NULL DEFAULT NULL COMMENT '읍',
+	`latitude` FLOAT NULL DEFAULT NULL COMMENT '위도',
+	`longitude` FLOAT NULL DEFAULT NULL COMMENT '경도',
+	`x` INT(11) NULL DEFAULT NULL COMMENT 'X',
+	`y` INT(11) NULL DEFAULT NULL COMMENT 'Y',
+	PRIMARY KEY (`weather_location_seq`)
+)
+COMMENT='기상청의 날씨 API를 가져올 위치값 테이블'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=3479
+;
+
+
+
