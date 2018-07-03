@@ -1,4 +1,7 @@
-﻿module.exports = {
+﻿'use strict';
+const _ =  require('lodash');
+
+module.exports = {
   // 현재 컨트롤러 설정
   global: {
     // 염전 장치 Serial 사용여부(0: 소켓만, 1: 혼합, 2: 시리얼 만)
@@ -33,11 +36,15 @@
     dbInfo: {
       // host: 'smtb.iptime.org',
       // password: 'upsas1111',
-      port: process.env.SALTERN_PORT ? process.env.SALTERN_PORT : '3306',
-      host: process.env.SALTERN_HOST ? process.env.SALTERN_HOST : 'localhost',
-      user: process.env.SALTERN_USER ? process.env.SALTERN_USER : 'root',
-      password: process.env.SALTERN_PW ? process.env.SALTERN_PW : 'test',
-      database: process.env.SALTERN_DB ? process.env.SALTERN_DB : 'test'
+      port: _.get(process.env, 'FP_DB_PORT', 3306),
+      host: _.get(process.env, 'FP_DB_HOST', 'localhost'),
+      user: _.get(process.env, 'FP_DB_USER', 'root'),
+      password: _.get(process.env, 'FP_DB_PASSWORD', 'root'),
+      database: _.get(process.env, 'FP_DB_DATABASE', 'root'),
+      // host: process.env.SALTERN_HOST ? process.env.SALTERN_HOST : 'localhost',
+      // user: process.env.SALTERN_USER ? process.env.SALTERN_USER : 'root',
+      // password: process.env.SALTERN_PW ? process.env.SALTERN_PW : 'test',
+      // database: process.env.SALTERN_DB ? process.env.SALTERN_DB : 'test'
     },
     salternInfo: {
       hasTryConnect: true,  // 염전과의 연결을 할지 여부

@@ -4,17 +4,15 @@ process.env.NODE_ENV = 'production';
 process.env.NODE_ENV = 'development';
 
 require('./models/SchemeModel');
-const LibrayModel =  require('./models/LibrayModel');
 
-
-
+require('dotenv').config();
 const Promise = require('bluebird');
 
 const InitSetter = require('./config/InitSetter.js');
 
 const config = require('./config.js');
 const {BU, DU, SU} = require('base-util-jh');
-const _ =  require('underscore');
+const _ =  require('lodash');
 
 global.BU = BU;
 global.DU = DU;
@@ -51,6 +49,7 @@ function operationController() {
 }
 
 operationController();
+
 
 process.on('unhandledRejection', error => console.error(error));
 process.on('uncaughtException', error => console.error(error));

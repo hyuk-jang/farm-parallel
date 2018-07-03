@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 // const mome = require('mometo');
 const bmjh = require('base-model-jh');
 const BU = require('base-util-jh').baseUtil;
@@ -351,7 +351,7 @@ class BiModule extends bmjh.BM {
     if (deviceType === 'all' || deviceType === 'inverter') {
       let inverterList = await this.getTable('inverter');
       inverterList = _.sortBy(inverterList, 'chart_sort_rank');
-      _.each(inverterList, info => {
+      _.forEach(inverterList, info => {
         returnValue.push({type: 'inverter', seq: info.inverter_seq, target_name: info.target_name});
       });
     }
@@ -361,7 +361,7 @@ class BiModule extends bmjh.BM {
     if (deviceType === 'all' || deviceType === 'connector') {
       let connectorList = await this.getTable('connector');
       connectorList = _.sortBy(connectorList, 'chart_sort_rank');
-      _.each(connectorList, info => {
+      _.forEach(connectorList, info => {
         returnValue.push({type: 'connector', seq: info.connector_seq, target_name: info.target_name});
       });
     }
@@ -1026,9 +1026,9 @@ class BiModule extends bmjh.BM {
     let trendReportList = [];
 
     // 모듈 기본정보 입력
-    _.each(moduleReportList.gridPowerInfo, (moduleDataList, moduleSeq) => {
+    _.forEach(moduleReportList.gridPowerInfo, (moduleDataList, moduleSeq) => {
       // BU.CLI(moduleSeq)
-      let findProfile = _.findWhere(upsasProfile, {
+      let findProfile = _.find(upsasProfile, {
         photovoltaic_seq: Number(moduleSeq)
       });
       // BU.CLI(findProfile)
@@ -1040,7 +1040,7 @@ class BiModule extends bmjh.BM {
 
       moduleReportList.betweenDatePointObj.fullTxtPoint.forEach((strDateFormat, ftpIndex) => {
         // BU.CLIS(strDateFormat, moduleDataList)
-        let findGridObj = _.findWhere(moduleDataList, {
+        let findGridObj = _.find(moduleDataList, {
           group_date: strDateFormat
         });
 
