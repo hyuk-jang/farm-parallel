@@ -22,7 +22,6 @@
     "express-async-handler": "^1.1.3",
     "express-mysql-session": "^1.3.0",
     "express-session": "^1.15.6",
-    "joi": "^13.4.0",
     "lodash": "^4.17.10",
     "method-override": "^2.3.10",
     "moment": "^2.22.2",
