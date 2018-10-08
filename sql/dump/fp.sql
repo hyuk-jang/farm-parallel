@@ -63,7 +63,7 @@ CREATE TABLE `dv_data_logger` (
   KEY `FK_DV_DATA_LOGGER_DEF_TO_DV_DATA_LOGGER` (`data_logger_def_seq`),
   CONSTRAINT `FK_DV_DATA_LOGGER_DEF_TO_DV_DATA_LOGGER` FOREIGN KEY (`data_logger_def_seq`) REFERENCES `dv_data_logger_def` (`data_logger_def_seq`),
   CONSTRAINT `FK_MAIN_TO_DV_DATA_LOGGER` FOREIGN KEY (`main_seq`) REFERENCES `main` (`main_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='데이타 로거';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='데이타 로거';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +72,7 @@ CREATE TABLE `dv_data_logger` (
 
 LOCK TABLES `dv_data_logger` WRITE;
 /*!40000 ALTER TABLE `dv_data_logger` DISABLE KEYS */;
+INSERT INTO `dv_data_logger` VALUES (3,1,7,'1','001','{\"type\":\"socket\",\"subType\":\"\",\"host\":\"localhost\",\"port\":9000}','{\"mainCategory\":\"FarmParallel\",\"subCategory\":\"dmTech\",\"deviceId\":1}'),(4,1,7,'2','002','{\"type\":\"socket\",\"subType\":\"\",\"host\":\"localhost\",\"port\":9000}','{\"mainCategory\":\"FarmParallel\",\"subCategory\":\"dmTech\",\"deviceId\":2}'),(5,2,7,'1','001','{\"type\":\"socket\",\"subType\":\"\",\"host\":\"localhost\",\"port\":9001}','{\"mainCategory\":\"FarmParallel\",\"subCategory\":\"dmTech\",\"deviceId\":1}'),(6,2,7,'2','002','{\"type\":\"socket\",\"subType\":\"\",\"host\":\"localhost\",\"port\":9001}','{\"mainCategory\":\"FarmParallel\",\"subCategory\":\"dmTech\",\"deviceId\":2}');
 /*!40000 ALTER TABLE `dv_data_logger` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +89,7 @@ CREATE TABLE `dv_data_logger_def` (
   `target_name` varchar(50) DEFAULT NULL COMMENT '데이터 로거를 부를 일반 명칭',
   PRIMARY KEY (`data_logger_def_seq`),
   UNIQUE KEY `UIX_DV_DATA_LOGGER_DEF` (`target_prefix`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='데이터 로거 개요';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='데이터 로거 개요';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,6 +98,7 @@ CREATE TABLE `dv_data_logger_def` (
 
 LOCK TABLES `dv_data_logger_def` WRITE;
 /*!40000 ALTER TABLE `dv_data_logger_def` DISABLE KEYS */;
+INSERT INTO `dv_data_logger_def` VALUES (7,'D_SB','센서 Board DL');
 /*!40000 ALTER TABLE `dv_data_logger_def` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +177,7 @@ CREATE TABLE `dv_node` (
   KEY `FK_DV_DATA_LOGGER_TO_DV_NODE` (`data_logger_seq`),
   CONSTRAINT `FK_DV_DATA_LOGGER_TO_DV_NODE` FOREIGN KEY (`data_logger_seq`) REFERENCES `dv_data_logger` (`data_logger_seq`),
   CONSTRAINT `FK_DV_NODE_DEF_TO_DV_NODE` FOREIGN KEY (`node_def_seq`) REFERENCES `dv_node_def` (`node_def_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='장치 및 센서 정';
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='장치 및 센서 정';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,6 +186,7 @@ CREATE TABLE `dv_node` (
 
 LOCK TABLES `dv_node` WRITE;
 /*!40000 ALTER TABLE `dv_node` DISABLE KEYS */;
+INSERT INTO `dv_node` VALUES (1,1,3,'001',0,NULL),(2,1,4,'002',0,NULL),(3,2,3,'001',0,NULL),(4,2,4,'002',0,NULL),(5,3,3,'001',0,NULL),(6,3,4,'002',0,NULL),(7,4,3,'001',0,NULL),(8,4,4,'002',0,NULL),(9,5,3,'001',0,NULL),(10,5,4,'002',0,NULL),(11,6,3,'001',0,NULL),(12,6,4,'002',0,NULL),(13,7,3,'001',0,NULL),(14,7,4,'002',0,NULL),(15,8,3,'001',0,NULL),(16,8,4,'002',0,NULL),(17,9,3,'001',0,NULL),(18,9,4,'002',0,NULL),(19,10,3,'001',0,NULL),(20,10,4,'002',0,NULL),(21,11,3,'001',0,NULL),(22,11,4,'002',0,NULL),(23,12,3,'001',0,NULL),(24,12,4,'002',0,NULL),(25,1,5,'001',0,NULL),(26,1,6,'002',0,NULL),(27,2,5,'001',0,NULL),(28,2,6,'002',0,NULL),(29,3,5,'001',0,NULL),(30,3,6,'002',0,NULL),(31,4,5,'001',0,NULL),(32,4,6,'002',0,NULL),(33,5,5,'001',0,NULL),(34,5,6,'002',0,NULL),(35,6,5,'001',0,NULL),(36,6,6,'002',0,NULL),(37,7,5,'001',0,NULL),(38,7,6,'002',0,NULL),(39,8,5,'001',0,NULL),(40,8,6,'002',0,NULL),(41,9,5,'001',0,NULL),(42,9,6,'002',0,NULL),(43,10,5,'001',0,NULL),(44,10,6,'002',0,NULL),(45,11,5,'001',0,NULL),(46,11,6,'002',0,NULL),(47,12,5,'001',0,NULL),(48,12,6,'002',0,NULL);
 /*!40000 ALTER TABLE `dv_node` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +206,7 @@ CREATE TABLE `dv_node_class` (
   `description` varchar(255) DEFAULT NULL COMMENT '부연 설명이 필요한 경우',
   PRIMARY KEY (`node_class_seq`),
   UNIQUE KEY `UIX_DV_NODE_CLASS` (`target_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='지정된 센서 목록으로 온도 센서(Temperature), 풍향 센서(WindSpeed) 등등을 표기한 ';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='지정된 센서 목록으로 온도 센서(Temperature), 풍향 센서(WindSpeed) 등등을 표기한 ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +215,7 @@ CREATE TABLE `dv_node_class` (
 
 LOCK TABLES `dv_node_class` WRITE;
 /*!40000 ALTER TABLE `dv_node_class` DISABLE KEYS */;
+INSERT INTO `dv_node_class` VALUES (1,'temp','온도',1,'℃','섭씨: 1 atm에서의 물의 어는점을 0도, 끓는점을 100도로 정한 온도'),(2,'reh','습도',1,'%RH','공기 중에 포함되어 있는 수증기의 양 또는 비율을 나타내는 단위'),(3,'ws','풍속',1,'m/s','초당 바람이 이동하는 거리(m)'),(4,'wd','풍향',1,'°','바람이 불어오는 방향을 360 각도로 표현'),(5,'solar','일사량',1,'W/m²','1평방 미터당 조사되는 일사에너지의 양이 1W'),(6,'rainfall','강우량',1,'mm/hr','시간당 일정한 곳에 내린 비의 분량. 단위는 mm'),(7,'isRain','강우 감지 여부',1,NULL,'감지시 1, 미감지시 0'),(8,'co2','이산화탄소',1,'ppm','백만분의 1. 이산화탄소 농도 395ppm = 395/1,000,000 * 100 = 0.0395 %'),(9,'uv','자외선',1,'mJ/c㎡','1평방 센치당 조사되는 uv 에너지가 1mJ'),(10,'lux','조도',1,'lx','1㎡의 면적 위에 1m의 광속이 균일하게 비춰질 때'),(11,'waterValue','수분 값',1,'%',''),(12,'vol','전압',1,'V',NULL),(13,'amp','전류',1,'A',NULL);
 /*!40000 ALTER TABLE `dv_node_class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +238,7 @@ CREATE TABLE `dv_node_def` (
   UNIQUE KEY `UIX_DV_NODE_DEF2` (`target_id`),
   KEY `FK_DV_NODE_CLASS_TO_DV_NODE_DEF` (`node_class_seq`),
   CONSTRAINT `FK_DV_NODE_CLASS_TO_DV_NODE_DEF` FOREIGN KEY (`node_class_seq`) REFERENCES `dv_node_class` (`node_class_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='노드 개요 정보';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='노드 개요 정보';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,6 +247,7 @@ CREATE TABLE `dv_node_def` (
 
 LOCK TABLES `dv_node_def` WRITE;
 /*!40000 ALTER TABLE `dv_node_def` DISABLE KEYS */;
+INSERT INTO `dv_node_def` VALUES (1,1,'T_S','soilTemperature','토양 온도','섭씨: 1 atm에서의 물의 어는점을 0도, 끓는점을 100도로 정한 온도'),(2,1,'T_OA','outsideAirTemperature','외기 온도','섭씨: 1 atm에서의 물의 어는점을 0도, 끓는점을 100도로 정한 온도'),(3,2,'RH_S','soilReh','토양 습도','공기 중에 포함되어 있는 수증기의 양 또는 비율을 나타내는 단위'),(4,2,'RH_OA','outsideAirReh','외기 습도','공기 중에 포함되어 있는 수증기의 양 또는 비율을 나타내는 단위'),(5,3,'W_S','windSpeed','풍속','초당 바람이 이동하는 거리(m)'),(6,4,'W_D','windDirection','풍향','바람이 불어오는 방향을 360 각도로 표현'),(7,5,'SL','solar','일사량','1평방 미터당 조사되는 일사에너지의 양이 1W'),(8,6,'RF1','r1','시간당 강우량','시간당 일정한 곳에 내린 비의 분량. 단위는 mm'),(9,7,'IR','isRain','강우 감지 여부','감지시 1, 미감지시 0'),(10,8,'CO2','co2','이산화탄소','백만분의 1. 이산화탄소 농도 395ppm = 395/1,000,000 * 100 = 0.0395 %'),(11,10,'LX','lux','조도','1㎡의 면적 위에 1m의 광속이 균일하게 비춰질 때'),(12,11,'WV_S','soilWaterValue','토양 수분 값','');
 /*!40000 ALTER TABLE `dv_node_def` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,7 +267,7 @@ CREATE TABLE `dv_place` (
   PRIMARY KEY (`place_seq`),
   KEY `FK_DV_PLACE_DEF_TO_DV_PLACE` (`place_def_seq`),
   CONSTRAINT `FK_DV_PLACE_DEF_TO_DV_PLACE` FOREIGN KEY (`place_def_seq`) REFERENCES `dv_place_def` (`place_def_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='장소 정보';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='장소 정보';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,6 +276,7 @@ CREATE TABLE `dv_place` (
 
 LOCK TABLES `dv_place` WRITE;
 /*!40000 ALTER TABLE `dv_place` DISABLE KEYS */;
+INSERT INTO `dv_place` VALUES (15,6,'1',1,NULL),(16,6,'2',1,NULL);
 /*!40000 ALTER TABLE `dv_place` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -288,7 +294,7 @@ CREATE TABLE `dv_place_class` (
   `description` varchar(255) DEFAULT NULL COMMENT '장소 분류 설명',
   PRIMARY KEY (`place_class_seq`),
   UNIQUE KEY `UIX_DV_PLACE_CLASS` (`target_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='장소 대분류';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='장소 대분류';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -297,6 +303,7 @@ CREATE TABLE `dv_place_class` (
 
 LOCK TABLES `dv_place_class` WRITE;
 /*!40000 ALTER TABLE `dv_place_class` DISABLE KEYS */;
+INSERT INTO `dv_place_class` VALUES (1,'salternBlock','염판',NULL),(2,'brineWarehouse','해주',NULL),(3,'reservoir','저수조',NULL),(4,'sea','바다',NULL),(5,'site','부지','테스트 부지');
 /*!40000 ALTER TABLE `dv_place_class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,7 +325,7 @@ CREATE TABLE `dv_place_def` (
   UNIQUE KEY `UIX_DV_PLACE_DEF2` (`target_prefix`),
   KEY `FK_DV_PLACE_CLASS_TO_DV_PLACE_DEF` (`place_class_seq`),
   CONSTRAINT `FK_DV_PLACE_CLASS_TO_DV_PLACE_DEF` FOREIGN KEY (`place_class_seq`) REFERENCES `dv_place_class` (`place_class_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='장소 개요 정보';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='장소 개요 정보';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -327,6 +334,7 @@ CREATE TABLE `dv_place_def` (
 
 LOCK TABLES `dv_place_def` WRITE;
 /*!40000 ALTER TABLE `dv_place_def` DISABLE KEYS */;
+INSERT INTO `dv_place_def` VALUES (6,5,'site','SITE','부지');
 /*!40000 ALTER TABLE `dv_place_def` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -346,7 +354,7 @@ CREATE TABLE `dv_place_relation` (
   KEY `FK_DV_PLACE_TO_DV_PLACE_RELATION` (`place_seq`),
   CONSTRAINT `FK_DV_NODE_TO_DV_PLACE_RELATION` FOREIGN KEY (`node_seq`) REFERENCES `dv_node` (`node_seq`),
   CONSTRAINT `FK_DV_PLACE_TO_DV_PLACE_RELATION` FOREIGN KEY (`place_seq`) REFERENCES `dv_place` (`place_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='센서 관계';
+) ENGINE=InnoDB AUTO_INCREMENT=505 DEFAULT CHARSET=utf8 COMMENT='센서 관계';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -355,6 +363,7 @@ CREATE TABLE `dv_place_relation` (
 
 LOCK TABLES `dv_place_relation` WRITE;
 /*!40000 ALTER TABLE `dv_place_relation` DISABLE KEYS */;
+INSERT INTO `dv_place_relation` VALUES (433,1,15),(434,3,15),(435,5,15),(436,7,15),(437,9,15),(438,11,15),(439,13,15),(440,15,15),(441,17,15),(442,19,15),(443,21,15),(444,23,15),(445,2,16),(446,4,16),(447,6,16),(448,8,16),(449,10,16),(450,12,16),(451,14,16),(452,16,16),(453,18,16),(454,20,16),(455,22,16),(456,24,16),(481,25,15),(482,27,15),(483,29,15),(484,31,15),(485,33,15),(486,35,15),(487,37,15),(488,39,15),(489,41,15),(490,43,15),(491,45,15),(492,47,15),(493,26,16),(494,28,16),(495,30,16),(496,32,16),(497,34,16),(498,36,16),(499,38,16),(500,40,16),(501,42,16),(502,44,16),(503,46,16),(504,48,16);
 /*!40000 ALTER TABLE `dv_place_relation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,7 +382,7 @@ CREATE TABLE `dv_sensor_data` (
   PRIMARY KEY (`sensor_data_seq`,`node_seq`),
   KEY `FK_DV_NODE_TO_DV_SENSOR_DATA` (`node_seq`),
   CONSTRAINT `FK_DV_NODE_TO_DV_SENSOR_DATA` FOREIGN KEY (`node_seq`) REFERENCES `dv_node` (`node_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='수치 데이터를 가지고 있는 센서의 데이터를 기록';
+) ENGINE=InnoDB AUTO_INCREMENT=239 DEFAULT CHARSET=utf8 COMMENT='수치 데이터를 가지고 있는 센서의 데이터를 기록';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -382,6 +391,7 @@ CREATE TABLE `dv_sensor_data` (
 
 LOCK TABLES `dv_sensor_data` WRITE;
 /*!40000 ALTER TABLE `dv_sensor_data` DISABLE KEYS */;
+INSERT INTO `dv_sensor_data` VALUES (25,1,43.1,'2018-10-05 16:50:17'),(26,3,33.5,'2018-10-05 16:50:17'),(27,5,37.9,'2018-10-05 16:50:17'),(28,7,68.7,'2018-10-05 16:50:17'),(29,9,29.4,'2018-10-05 16:50:17'),(30,11,31,'2018-10-05 16:50:17'),(31,13,482,'2018-10-05 16:50:17'),(32,15,10.5,'2018-10-05 16:50:17'),(33,19,286,'2018-10-05 16:50:17'),(34,21,86,'2018-10-05 16:50:17'),(35,23,48.4,'2018-10-05 16:50:17'),(36,2,27,'2018-10-05 16:50:17'),(37,4,13.1,'2018-10-05 16:50:17'),(38,6,58.3,'2018-10-05 16:50:17'),(39,8,54,'2018-10-05 16:50:17'),(40,10,28.7,'2018-10-05 16:50:17'),(41,12,181,'2018-10-05 16:50:17'),(42,14,702,'2018-10-05 16:50:17'),(43,16,1.2,'2018-10-05 16:50:17'),(44,20,498,'2018-10-05 16:50:17'),(45,22,37,'2018-10-05 16:50:17'),(46,24,43.9,'2018-10-05 16:50:17'),(47,1,23.6,'2018-10-05 16:58:35'),(48,3,22.3,'2018-10-05 16:58:35'),(49,5,73.5,'2018-10-05 16:58:35'),(50,7,31.2,'2018-10-05 16:58:35'),(51,9,24.3,'2018-10-05 16:58:35'),(52,11,286,'2018-10-05 16:58:35'),(53,13,81,'2018-10-05 16:58:35'),(54,15,8.4,'2018-10-05 16:58:35'),(55,17,1,'2018-10-05 16:58:35'),(56,19,314,'2018-10-05 16:58:35'),(57,21,122,'2018-10-05 16:58:35'),(58,23,42.4,'2018-10-05 16:58:35'),(59,2,23,'2018-10-05 16:58:35'),(60,4,19.4,'2018-10-05 16:58:35'),(61,6,58.4,'2018-10-05 16:58:35'),(62,8,51.7,'2018-10-05 16:58:35'),(63,10,20.8,'2018-10-05 16:58:35'),(64,12,141,'2018-10-05 16:58:35'),(65,14,930,'2018-10-05 16:58:35'),(66,16,7,'2018-10-05 16:58:35'),(67,18,0,'2018-10-05 16:58:35'),(68,20,440,'2018-10-05 16:58:35'),(69,22,45,'2018-10-05 16:58:35'),(70,24,46.3,'2018-10-05 16:58:35'),(71,1,30.7,'2018-10-05 17:01:27'),(72,3,22.9,'2018-10-05 17:01:27'),(73,5,77.5,'2018-10-05 17:01:27'),(74,7,32.5,'2018-10-05 17:01:27'),(75,9,24.6,'2018-10-05 17:01:27'),(76,11,259,'2018-10-05 17:01:27'),(77,13,163,'2018-10-05 17:01:27'),(78,15,7.5,'2018-10-05 17:01:27'),(79,17,1,'2018-10-05 17:01:27'),(80,19,344,'2018-10-05 17:01:27'),(81,21,57,'2018-10-05 17:01:27'),(82,23,46,'2018-10-05 17:01:27'),(83,2,26.2,'2018-10-05 17:01:28'),(84,4,33.4,'2018-10-05 17:01:28'),(85,6,35.2,'2018-10-05 17:01:28'),(86,8,64.3,'2018-10-05 17:01:28'),(87,10,23.1,'2018-10-05 17:01:28'),(88,12,339,'2018-10-05 17:01:28'),(89,14,882,'2018-10-05 17:01:28'),(90,16,2.5,'2018-10-05 17:01:28'),(91,18,1,'2018-10-05 17:01:28'),(92,20,345,'2018-10-05 17:01:28'),(93,22,123,'2018-10-05 17:01:28'),(94,24,46.2,'2018-10-05 17:01:28'),(95,1,28,'2018-10-05 17:05:39'),(96,3,43.2,'2018-10-05 17:05:39'),(97,5,67.8,'2018-10-05 17:05:39'),(98,7,45.5,'2018-10-05 17:05:39'),(99,9,23.1,'2018-10-05 17:05:39'),(100,11,356,'2018-10-05 17:05:39'),(101,13,860,'2018-10-05 17:05:39'),(102,15,8.6,'2018-10-05 17:05:39'),(103,17,0,'2018-10-05 17:05:39'),(104,19,476,'2018-10-05 17:05:39'),(105,21,66,'2018-10-05 17:05:39'),(106,23,41.7,'2018-10-05 17:05:39'),(107,2,16.5,'2018-10-05 17:05:39'),(108,4,22.5,'2018-10-05 17:05:39'),(109,6,94.6,'2018-10-05 17:05:39'),(110,8,45.5,'2018-10-05 17:05:39'),(111,10,26.9,'2018-10-05 17:05:39'),(112,12,349,'2018-10-05 17:05:39'),(113,14,57,'2018-10-05 17:05:39'),(114,16,3.6,'2018-10-05 17:05:39'),(115,18,1,'2018-10-05 17:05:39'),(116,20,448,'2018-10-05 17:05:39'),(117,22,40,'2018-10-05 17:05:39'),(118,24,46.7,'2018-10-05 17:05:39'),(119,1,32.6,'2018-10-05 17:54:15'),(120,3,26.7,'2018-10-05 17:54:15'),(121,5,73.7,'2018-10-05 17:54:15'),(122,7,45.5,'2018-10-05 17:54:15'),(123,9,27.1,'2018-10-05 17:54:15'),(124,11,177,'2018-10-05 17:54:15'),(125,13,262,'2018-10-05 17:54:15'),(126,15,5.6,'2018-10-05 17:54:15'),(127,17,0,'2018-10-05 17:54:15'),(128,19,403,'2018-10-05 17:54:15'),(129,21,106,'2018-10-05 17:54:15'),(130,23,46.1,'2018-10-05 17:54:15'),(131,2,25.5,'2018-10-05 17:54:15'),(132,4,28.6,'2018-10-05 17:54:15'),(133,6,63.3,'2018-10-05 17:54:15'),(134,8,63.1,'2018-10-05 17:54:15'),(135,10,23.3,'2018-10-05 17:54:15'),(136,12,117,'2018-10-05 17:54:15'),(137,14,89,'2018-10-05 17:54:15'),(138,16,8.5,'2018-10-05 17:54:15'),(139,18,1,'2018-10-05 17:54:15'),(140,20,442,'2018-10-05 17:54:15'),(141,22,81,'2018-10-05 17:54:15'),(142,24,40.9,'2018-10-05 17:54:15'),(143,1,32.4,'2018-10-05 18:01:10'),(144,3,16.7,'2018-10-05 18:01:10'),(145,5,33.2,'2018-10-05 18:01:10'),(146,7,40.5,'2018-10-05 18:01:10'),(147,9,24.9,'2018-10-05 18:01:10'),(148,11,335,'2018-10-05 18:01:10'),(149,13,484,'2018-10-05 18:01:10'),(150,15,2,'2018-10-05 18:01:10'),(151,17,0,'2018-10-05 18:01:10'),(152,19,395,'2018-10-05 18:01:10'),(153,21,58,'2018-10-05 18:01:10'),(154,23,58,'2018-10-05 18:01:10'),(155,2,31.5,'2018-10-05 18:01:10'),(156,4,26.7,'2018-10-05 18:01:10'),(157,6,90.7,'2018-10-05 18:01:10'),(158,8,96.6,'2018-10-05 18:01:10'),(159,10,28.8,'2018-10-05 18:01:10'),(160,12,273,'2018-10-05 18:01:10'),(161,14,649,'2018-10-05 18:01:10'),(162,16,8.3,'2018-10-05 18:01:10'),(163,18,0,'2018-10-05 18:01:10'),(164,20,448,'2018-10-05 18:01:10'),(165,22,97,'2018-10-05 18:01:10'),(166,24,40.5,'2018-10-05 18:01:10'),(167,1,32.4,'2018-10-05 18:01:40'),(168,3,18.2,'2018-10-05 18:01:40'),(169,5,29.5,'2018-10-05 18:01:40'),(170,7,40.5,'2018-10-05 18:01:40'),(171,9,23.9,'2018-10-05 18:01:40'),(172,11,335,'2018-10-05 18:01:40'),(173,13,489,'2018-10-05 18:01:40'),(174,15,2,'2018-10-05 18:01:40'),(175,17,0,'2018-10-05 18:01:40'),(176,19,379,'2018-10-05 18:01:40'),(177,21,59,'2018-10-05 18:01:40'),(178,23,57.5,'2018-10-05 18:01:40'),(179,2,33.6,'2018-10-05 18:01:41'),(180,4,24.1,'2018-10-05 18:01:41'),(181,6,95.1,'2018-10-05 18:01:41'),(182,8,101.1,'2018-10-05 18:01:41'),(183,10,27.3,'2018-10-05 18:01:41'),(184,12,273,'2018-10-05 18:01:41'),(185,14,656,'2018-10-05 18:01:41'),(186,16,8.4,'2018-10-05 18:01:41'),(187,18,0,'2018-10-05 18:01:41'),(188,20,469,'2018-10-05 18:01:41'),(189,22,88,'2018-10-05 18:01:41'),(190,24,39.9,'2018-10-05 18:01:41'),(191,1,32.1,'2018-10-05 18:02:01'),(192,3,17.6,'2018-10-05 18:02:01'),(193,5,29.5,'2018-10-05 18:02:01'),(194,7,41.5,'2018-10-05 18:02:01'),(195,9,23.8,'2018-10-05 18:02:01'),(196,11,335,'2018-10-05 18:02:01'),(197,13,495,'2018-10-05 18:02:01'),(198,15,2,'2018-10-05 18:02:01'),(199,17,0,'2018-10-05 18:02:01'),(200,19,360,'2018-10-05 18:02:01'),(201,21,59,'2018-10-05 18:02:01'),(202,23,55.2,'2018-10-05 18:02:01'),(203,2,38.1,'2018-10-05 18:02:01'),(204,4,27.9,'2018-10-05 18:02:01'),(205,6,93.1,'2018-10-05 18:02:01'),(206,8,102.9,'2018-10-05 18:02:01'),(207,10,24.8,'2018-10-05 18:02:01'),(208,12,273,'2018-10-05 18:02:01'),(209,14,599,'2018-10-05 18:02:01'),(210,16,8.5,'2018-10-05 18:02:01'),(211,18,0,'2018-10-05 18:02:01'),(212,20,475,'2018-10-05 18:02:01'),(213,22,91,'2018-10-05 18:02:01'),(214,24,41.5,'2018-10-05 18:02:01'),(215,1,29.5,'2018-10-05 18:03:00'),(216,3,17.9,'2018-10-05 18:03:00'),(217,5,29.5,'2018-10-05 18:03:00'),(218,7,37.7,'2018-10-05 18:03:00'),(219,9,23.8,'2018-10-05 18:03:00'),(220,11,335,'2018-10-05 18:03:00'),(221,13,528,'2018-10-05 18:03:00'),(222,15,2.3,'2018-10-05 18:03:00'),(223,17,0,'2018-10-05 18:03:00'),(224,19,351,'2018-10-05 18:03:00'),(225,21,55,'2018-10-05 18:03:00'),(226,23,53.7,'2018-10-05 18:03:00'),(227,2,31.4,'2018-10-05 18:03:01'),(228,4,28.8,'2018-10-05 18:03:01'),(229,6,90.2,'2018-10-05 18:03:01'),(230,8,104.2,'2018-10-05 18:03:01'),(231,10,23.3,'2018-10-05 18:03:01'),(232,12,273,'2018-10-05 18:03:01'),(233,14,615,'2018-10-05 18:03:01'),(234,16,8.1,'2018-10-05 18:03:01'),(235,18,0,'2018-10-05 18:03:01'),(236,20,502,'2018-10-05 18:03:01'),(237,22,87,'2018-10-05 18:03:01'),(238,24,43.9,'2018-10-05 18:03:01');
 /*!40000 ALTER TABLE `dv_sensor_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,7 +418,7 @@ CREATE TABLE `main` (
   PRIMARY KEY (`main_seq`),
   KEY `FK_WC_WEATHER_LOCATION_TO_MAIN` (`weather_location_seq`),
   CONSTRAINT `FK_WC_WEATHER_LOCATION_TO_MAIN` FOREIGN KEY (`weather_location_seq`) REFERENCES `wc_weather_location` (`weather_location_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='설치되고 운용중인 UPSAS 목록 정보 ';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='설치되고 운용중인 UPSAS 목록 정보 ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,7 +427,7 @@ CREATE TABLE `main` (
 
 LOCK TABLES `main` WRITE;
 /*!40000 ALTER TABLE `main` DISABLE KEYS */;
-INSERT INTO `main` VALUES (1,2614,'aaaaa','영산포','전라남도 나주시 용산동 31-1',NULL,NULL,NULL,NULL,0,'2018-08-21 11:37:52','2018-08-21 02:37:52');
+INSERT INTO `main` VALUES (1,2614,'aaaaa','나주 배','전라남도 나주시 용산동 31-1',NULL,NULL,NULL,NULL,0,'2018-08-21 11:37:52','2018-08-21 02:37:52'),(2,2614,'bbbbb','나주 사과','나주',NULL,NULL,NULL,NULL,0,'2018-10-08 09:50:45','2018-10-08 00:50:46');
 /*!40000 ALTER TABLE `main` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -433,6 +443,7 @@ CREATE TABLE `main_map` (
   `path` varchar(255) DEFAULT NULL COMMENT '경로',
   `url` varchar(255) DEFAULT NULL COMMENT 'URL',
   `name` varchar(50) DEFAULT NULL COMMENT '파일이름',
+  `contents` longtext DEFAULT NULL,
   `writedate` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`main_seq`),
   CONSTRAINT `FK_MAIN_TO_MAIN_MAP` FOREIGN KEY (`main_seq`) REFERENCES `main` (`main_seq`)
@@ -445,6 +456,7 @@ CREATE TABLE `main_map` (
 
 LOCK TABLES `main_map` WRITE;
 /*!40000 ALTER TABLE `main_map` DISABLE KEYS */;
+INSERT INTO `main_map` VALUES (1,NULL,NULL,NULL,'{\"drawInfo\":{\"frame\":{\"mapSize\":{\"width\":880,\"height\":1230},\"svgModelResourceList\":[{\"id\":\"salternBlock_001\",\"type\":\"rect\",\"elementDrawInfo\":{\"width\":100,\"height\":150,\"color\":\"#33ffff\"}},{\"id\":\"salternBlock_002\",\"type\":\"rect\",\"elementDrawInfo\":{\"width\":100,\"height\":150,\"color\":\"#33ffff\"}},{\"id\":\"salternLine_001\",\"type\":\"line\",\"elementDrawInfo\":{\"strokeWidth\":100,\"color\":\"#33ccff\"}},{\"id\":\"pump_001\",\"type\":\"circle\",\"elementDrawInfo\":{\"radius\":20,\"color\":\"#9fe667\"}},{\"id\":\"valve_001\",\"type\":\"rhombus\",\"elementDrawInfo\":{\"width\":20,\"height\":20,\"rotate\":45,\"color\":\"#efb4ce\"}}]},\"positionList\":[{}]},\"setInfo\":{\"mainInfo\":{\"main_seq\":1,\"uuid\":\"aaaaa\"},\"dccConstructorList\":[{\"dccId\":\"DCC_001\",\"connect_info\":{\"type\":\"socket\",\"subType\":\"\",\"host\":\"localhost\",\"port\":9000}},{\"dccId\":\"DCC_002\",\"connect_info\":{\"type\":\"modbus\",\"subType\":\"rtu\",\"baudRate\":9600,\"port\":\"COM3\"}}],\"dpcConstructorList\":[{\"dpcId\":\"DPC_001\",\"protocol_info\":{\"mainCategory\":\"FarmParallel\",\"subCategory\":\"dmTech\"}}],\"dataLoggerStructureList\":[{\"target_prefix\":\"D_SB\",\"target_name\":\"센서 Board DL\",\"dataLoggerDeviceList\":[{\"serial_number\":1,\"target_code\":\"001\",\"dccId\":\"DCC_001\",\"dpcId\":\"DPC_001\",\"nodeList\":[\"T_S_001\",\"T_OA_001\",\"RH_S_001\",\"RH_OA_001\",\"W_S_001\",\"W_D_001\",\"SL_001\",\"RF1_001\",\"IR_001\",\"CO2_001\",\"LX_001\",\"WV_S_001\"]},{\"serial_number\":2,\"target_code\":\"002\",\"dccId\":\"DCC_001\",\"dpcId\":\"DPC_001\",\"nodeList\":[\"T_S_002\",\"T_OA_002\",\"RH_S_002\",\"RH_OA_002\",\"W_S_002\",\"W_D_002\",\"SL_002\",\"RF1_002\",\"IR_002\",\"CO2_002\",\"LX_002\",\"WV_S_002\"]}]}],\"nodeStructureList\":[{\"target_id\":\"temp\",\"target_name\":\"온도\",\"is_sensor\":1,\"data_unit\":\"℃\",\"description\":\"섭씨: 1 atm에서의 물의 어는점을 0도, 끓는점을 100도로 정한 온도\",\"defList\":[{\"target_id\":\"soilTemperature\",\"target_prefix\":\"T_S\",\"target_name\":\"토양 온도\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]},{\"target_id\":\"outsideAirTemperature\",\"target_prefix\":\"T_OA\",\"target_name\":\"외기 온도\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"reh\",\"target_name\":\"습도\",\"is_sensor\":1,\"data_unit\":\"%RH\",\"description\":\"공기 중에 포함되어 있는 수증기의 양 또는 비율을 나타내는 단위\",\"defList\":[{\"target_id\":\"soilReh\",\"target_prefix\":\"RH_S\",\"target_name\":\"토양 습도\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]},{\"target_id\":\"outsideAirReh\",\"target_prefix\":\"RH_OA\",\"target_name\":\"외기 습도\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"ws\",\"target_name\":\"풍속\",\"is_sensor\":1,\"data_unit\":\"m/s\",\"description\":\"초당 바람이 이동하는 거리(m)\",\"defList\":[{\"target_id\":\"windSpeed\",\"target_prefix\":\"W_S\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"wd\",\"target_name\":\"풍향\",\"is_sensor\":1,\"data_unit\":\"°\",\"description\":\"바람이 불어오는 방향을 360 각도로 표현\",\"defList\":[{\"target_id\":\"windDirection\",\"target_prefix\":\"W_D\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"solar\",\"target_name\":\"일사량\",\"is_sensor\":1,\"data_unit\":\"W/m²\",\"description\":\"1평방 미터당 조사되는 일사에너지의 양이 1W\",\"defList\":[{\"target_id\":\"solar\",\"target_prefix\":\"SL\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"rainfall\",\"target_name\":\"강우량\",\"is_sensor\":1,\"data_unit\":\"mm/hr\",\"description\":\"시간당 일정한 곳에 내린 비의 분량. 단위는 mm\",\"defList\":[{\"target_id\":\"r1\",\"target_prefix\":\"RF1\",\"target_name\":\"시간당 강우량\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"isRain\",\"target_name\":\"강우 감지 여부\",\"is_sensor\":1,\"data_unit\":null,\"description\":\"감지시 1, 미감지시 0\",\"defList\":[{\"target_id\":\"isRain\",\"target_prefix\":\"IR\",\"target_name\":\"강우 감지 여부\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"co2\",\"target_name\":\"이산화탄소\",\"is_sensor\":1,\"data_unit\":\"ppm\",\"description\":\"백만분의 1. 이산화탄소 농도 395ppm = 395/1,000,000 * 100 = 0.0395 %\",\"defList\":[{\"target_id\":\"co2\",\"target_prefix\":\"CO2\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"uv\",\"target_name\":\"자외선\",\"is_sensor\":1,\"data_unit\":\"mJ/c㎡\",\"description\":\"1평방 센치당 조사되는 uv 에너지가 1mJ\",\"defList\":[]},{\"target_id\":\"lux\",\"target_name\":\"조도\",\"is_sensor\":1,\"data_unit\":\"lx\",\"description\":\"1㎡의 면적 위에 1m의 광속이 균일하게 비춰질 때\",\"defList\":[{\"target_id\":\"lux\",\"target_prefix\":\"LX\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"waterValue\",\"target_name\":\"수분 값\",\"is_sensor\":1,\"data_unit\":\"%\",\"description\":\"\",\"defList\":[{\"target_id\":\"soilWaterValue\",\"target_prefix\":\"WV_S\",\"target_name\":\"토양 수분 값\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"vol\",\"target_name\":\"전압\",\"is_sensor\":1,\"data_unit\":\"V\",\"description\":null,\"defList\":[]},{\"target_id\":\"amp\",\"target_name\":\"전류\",\"is_sensor\":1,\"data_unit\":\"A\",\"description\":null,\"defList\":[]}]},\"realtionInfo\":{\"placeRelationList\":[{\"target_id\":\"site\",\"target_name\":\"부지\",\"description\":\"테스트 부지\",\"defList\":[{\"target_id\":\"site\",\"target_prefix\":\"SITE\",\"placeList\":[{\"target_code\":\"1\",\"depth\":1,\"nodeList\":[\"T_S_001\",\"T_OA_001\",\"RH_S_001\",\"RH_OA_001\",\"W_S_001\",\"W_D_001\",\"SL_001\",\"RF1_001\",\"IR_001\",\"CO2_001\",\"LX_001\",\"WV_S_001\"]},{\"target_code\":\"2\",\"depth\":1,\"nodeList\":[\"T_S_002\",\"T_OA_002\",\"RH_S_002\",\"RH_OA_002\",\"W_S_002\",\"W_D_002\",\"SL_002\",\"RF1_002\",\"IR_002\",\"CO2_002\",\"LX_002\",\"WV_S_002\"]}]}]}]},\"controlInfo\":{}}','2018-10-08 14:38:18'),(2,NULL,NULL,NULL,'{\"drawInfo\":{\"frame\":{\"mapSize\":{\"width\":880,\"height\":1230},\"svgModelResourceList\":[{\"id\":\"salternBlock_001\",\"type\":\"rect\",\"elementDrawInfo\":{\"width\":100,\"height\":150,\"color\":\"#33ffff\"}},{\"id\":\"salternBlock_002\",\"type\":\"rect\",\"elementDrawInfo\":{\"width\":100,\"height\":150,\"color\":\"#33ffff\"}},{\"id\":\"salternLine_001\",\"type\":\"line\",\"elementDrawInfo\":{\"strokeWidth\":100,\"color\":\"#33ccff\"}},{\"id\":\"pump_001\",\"type\":\"circle\",\"elementDrawInfo\":{\"radius\":20,\"color\":\"#9fe667\"}},{\"id\":\"valve_001\",\"type\":\"rhombus\",\"elementDrawInfo\":{\"width\":20,\"height\":20,\"rotate\":45,\"color\":\"#efb4ce\"}}]},\"positionList\":[{}]},\"setInfo\":{\"mainInfo\":{\"main_seq\":2,\"uuid\":\"bbbbb\"},\"dccConstructorList\":[{\"dccId\":\"DCC_001\",\"connect_info\":{\"type\":\"socket\",\"subType\":\"\",\"host\":\"localhost\",\"port\":9001}},{\"dccId\":\"DCC_002\",\"connect_info\":{\"type\":\"modbus\",\"subType\":\"rtu\",\"baudRate\":9600,\"port\":\"COM3\"}}],\"dpcConstructorList\":[{\"dpcId\":\"DPC_001\",\"protocol_info\":{\"mainCategory\":\"FarmParallel\",\"subCategory\":\"dmTech\"}}],\"dataLoggerStructureList\":[{\"target_prefix\":\"D_SB\",\"target_name\":\"센서 Board DL\",\"dataLoggerDeviceList\":[{\"serial_number\":1,\"target_code\":\"001\",\"dccId\":\"DCC_001\",\"dpcId\":\"DPC_001\",\"nodeList\":[\"T_S_001\",\"T_OA_001\",\"RH_S_001\",\"RH_OA_001\",\"W_S_001\",\"W_D_001\",\"SL_001\",\"RF1_001\",\"IR_001\",\"CO2_001\",\"LX_001\",\"WV_S_001\"]},{\"serial_number\":2,\"target_code\":\"002\",\"dccId\":\"DCC_001\",\"dpcId\":\"DPC_001\",\"nodeList\":[\"T_S_002\",\"T_OA_002\",\"RH_S_002\",\"RH_OA_002\",\"W_S_002\",\"W_D_002\",\"SL_002\",\"RF1_002\",\"IR_002\",\"CO2_002\",\"LX_002\",\"WV_S_002\"]}]}],\"nodeStructureList\":[{\"target_id\":\"temp\",\"target_name\":\"온도\",\"is_sensor\":1,\"data_unit\":\"℃\",\"description\":\"섭씨: 1 atm에서의 물의 어는점을 0도, 끓는점을 100도로 정한 온도\",\"defList\":[{\"target_id\":\"soilTemperature\",\"target_prefix\":\"T_S\",\"target_name\":\"토양 온도\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]},{\"target_id\":\"outsideAirTemperature\",\"target_prefix\":\"T_OA\",\"target_name\":\"외기 온도\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"reh\",\"target_name\":\"습도\",\"is_sensor\":1,\"data_unit\":\"%RH\",\"description\":\"공기 중에 포함되어 있는 수증기의 양 또는 비율을 나타내는 단위\",\"defList\":[{\"target_id\":\"soilReh\",\"target_prefix\":\"RH_S\",\"target_name\":\"토양 습도\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]},{\"target_id\":\"outsideAirReh\",\"target_prefix\":\"RH_OA\",\"target_name\":\"외기 습도\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"ws\",\"target_name\":\"풍속\",\"is_sensor\":1,\"data_unit\":\"m/s\",\"description\":\"초당 바람이 이동하는 거리(m)\",\"defList\":[{\"target_id\":\"windSpeed\",\"target_prefix\":\"W_S\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"wd\",\"target_name\":\"풍향\",\"is_sensor\":1,\"data_unit\":\"°\",\"description\":\"바람이 불어오는 방향을 360 각도로 표현\",\"defList\":[{\"target_id\":\"windDirection\",\"target_prefix\":\"W_D\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"solar\",\"target_name\":\"일사량\",\"is_sensor\":1,\"data_unit\":\"W/m²\",\"description\":\"1평방 미터당 조사되는 일사에너지의 양이 1W\",\"defList\":[{\"target_id\":\"solar\",\"target_prefix\":\"SL\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"rainfall\",\"target_name\":\"강우량\",\"is_sensor\":1,\"data_unit\":\"mm/hr\",\"description\":\"시간당 일정한 곳에 내린 비의 분량. 단위는 mm\",\"defList\":[{\"target_id\":\"r1\",\"target_prefix\":\"RF1\",\"target_name\":\"시간당 강우량\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"isRain\",\"target_name\":\"강우 감지 여부\",\"is_sensor\":1,\"data_unit\":null,\"description\":\"감지시 1, 미감지시 0\",\"defList\":[{\"target_id\":\"isRain\",\"target_prefix\":\"IR\",\"target_name\":\"강우 감지 여부\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"co2\",\"target_name\":\"이산화탄소\",\"is_sensor\":1,\"data_unit\":\"ppm\",\"description\":\"백만분의 1. 이산화탄소 농도 395ppm = 395/1,000,000 * 100 = 0.0395 %\",\"defList\":[{\"target_id\":\"co2\",\"target_prefix\":\"CO2\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"uv\",\"target_name\":\"자외선\",\"is_sensor\":1,\"data_unit\":\"mJ/c㎡\",\"description\":\"1평방 센치당 조사되는 uv 에너지가 1mJ\",\"defList\":[]},{\"target_id\":\"lux\",\"target_name\":\"조도\",\"is_sensor\":1,\"data_unit\":\"lx\",\"description\":\"1㎡의 면적 위에 1m의 광속이 균일하게 비춰질 때\",\"defList\":[{\"target_id\":\"lux\",\"target_prefix\":\"LX\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"waterValue\",\"target_name\":\"수분 값\",\"is_sensor\":1,\"data_unit\":\"%\",\"description\":\"\",\"defList\":[{\"target_id\":\"soilWaterValue\",\"target_prefix\":\"WV_S\",\"target_name\":\"토양 수분 값\",\"nodeList\":[{\"target_code\":\"001\",\"data_logger_index\":0},{\"target_code\":\"002\",\"data_logger_index\":0}]}]},{\"target_id\":\"vol\",\"target_name\":\"전압\",\"is_sensor\":1,\"data_unit\":\"V\",\"description\":null,\"defList\":[]},{\"target_id\":\"amp\",\"target_name\":\"전류\",\"is_sensor\":1,\"data_unit\":\"A\",\"description\":null,\"defList\":[]}]},\"realtionInfo\":{\"placeRelationList\":[{\"target_id\":\"site\",\"target_name\":\"부지\",\"description\":\"테스트 부지\",\"defList\":[{\"target_id\":\"site\",\"target_prefix\":\"SITE\",\"placeList\":[{\"target_code\":\"1\",\"depth\":1,\"nodeList\":[\"T_S_001\",\"T_OA_001\",\"RH_S_001\",\"RH_OA_001\",\"W_S_001\",\"W_D_001\",\"SL_001\",\"RF1_001\",\"IR_001\",\"CO2_001\",\"LX_001\",\"WV_S_001\"]},{\"target_code\":\"2\",\"depth\":1,\"nodeList\":[\"T_S_002\",\"T_OA_002\",\"RH_S_002\",\"RH_OA_002\",\"W_S_002\",\"W_D_002\",\"SL_002\",\"RF1_002\",\"IR_002\",\"CO2_002\",\"LX_002\",\"WV_S_002\"]}]}]}]},\"controlInfo\":{}}','2018-10-08 09:51:39');
 /*!40000 ALTER TABLE `main_map` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -571,7 +583,7 @@ CREATE TABLE `pw_inverter` (
   `chart_sort_rank` tinyint(4) DEFAULT NULL COMMENT '대시 보드 차트 정렬 순위',
   PRIMARY KEY (`inverter_seq`),
   UNIQUE KEY `UIX_PW_INVERTER` (`target_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='인버터 장치 상세 정보';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='인버터 장치 상세 정보';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -580,7 +592,7 @@ CREATE TABLE `pw_inverter` (
 
 LOCK TABLES `pw_inverter` WRITE;
 /*!40000 ALTER TABLE `pw_inverter` DISABLE KEYS */;
-INSERT INTO `pw_inverter` VALUES (1,'IVT_001','인버터 1','inverter','{\"type\":\"socket\",\"subType\":\"\",\"baudRate\":9600,\"port\":9000}','{\"mainCategory\":\"Inverter\",\"subCategory\":\"das_1.3\",\"deviceId\":\"001\"}',NULL,NULL,NULL,NULL,NULL,'red',1),(2,'IVT_002','인버터 2','inverter','{\"type\":\"socket\",\"subType\":\"\",\"baudRate\":9600,\"port\":9000}','{\"mainCategory\":\"Inverter\",\"subCategory\":\"das_1.3\",\"deviceId\":\"001\"}',NULL,NULL,NULL,NULL,NULL,'green',2);
+INSERT INTO `pw_inverter` VALUES (1,'IVT_001','인버터 1','inverter','{\"type\":\"socket\",\"subType\":\"\",\"baudRate\":9600,\"port\":9000}','{\"mainCategory\":\"Inverter\",\"subCategory\":\"das_1.3\",\"deviceId\":\"001\"}',NULL,NULL,NULL,NULL,NULL,'red',1),(2,'IVT_002','인버터 2','inverter','{\"type\":\"socket\",\"subType\":\"\",\"baudRate\":9600,\"port\":9000}','{\"mainCategory\":\"Inverter\",\"subCategory\":\"das_1.3\",\"deviceId\":\"002\"}',NULL,NULL,NULL,NULL,NULL,'green',2),(3,'IVT_003','인버터 3','inverter','{\"type\":\"socket\",\"subType\":\"\",\"baudRate\":9600,\"port\":9000}','{\"mainCategory\":\"Inverter\",\"subCategory\":\"das_1.3\",\"deviceId\":\"003\"}',NULL,NULL,NULL,NULL,NULL,'blue',3),(4,'IVT_004','인버터 4','inverter','{\"type\":\"socket\",\"subType\":\"\",\"baudRate\":9600,\"port\":9000}','{\"mainCategory\":\"Inverter\",\"subCategory\":\"das_1.3\",\"deviceId\":\"004\"}',NULL,NULL,NULL,NULL,NULL,'black',4);
 /*!40000 ALTER TABLE `pw_inverter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -594,20 +606,21 @@ DROP TABLE IF EXISTS `pw_inverter_data`;
 CREATE TABLE `pw_inverter_data` (
   `inverter_data_seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '인버터 데이터 시퀀스',
   `inverter_seq` int(11) DEFAULT NULL COMMENT '인버터 정보 시퀀스',
-  `in_a` float DEFAULT NULL COMMENT 'A',
-  `in_v` float DEFAULT NULL COMMENT 'V',
-  `in_w` float NOT NULL COMMENT 'W',
-  `out_a` float DEFAULT NULL COMMENT 'A',
-  `out_v` float DEFAULT NULL COMMENT 'V',
-  `out_w` float NOT NULL COMMENT 'W',
-  `p_f` float NOT NULL COMMENT 'Power Factor',
-  `d_wh` float NOT NULL COMMENT 'Daily Power, 단위:Wh',
+  `in_a` float NOT NULL COMMENT 'A',
+  `in_v` float NOT NULL COMMENT 'V',
+  `in_w` float DEFAULT NULL COMMENT 'W',
+  `out_a` float NOT NULL COMMENT 'A',
+  `out_v` float NOT NULL COMMENT 'V',
+  `out_w` float DEFAULT NULL COMMENT 'W',
+  `p_f` float DEFAULT NULL COMMENT 'Power Factor',
+  `l_f` float DEFAULT NULL COMMENT 'Line Frequency',
+  `d_wh` float DEFAULT NULL COMMENT 'Daily Power, 단위:Wh',
   `c_wh` float NOT NULL COMMENT 'Cumulative Power, 단위:Wh',
   `writedate` datetime NOT NULL COMMENT '등록일',
   PRIMARY KEY (`inverter_data_seq`),
   KEY `FK_PW_INVERTER_TO_PW_INVERTER_DATA` (`inverter_seq`),
   CONSTRAINT `FK_PW_INVERTER_TO_PW_INVERTER_DATA` FOREIGN KEY (`inverter_seq`) REFERENCES `pw_inverter` (`inverter_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='인버터에서 측정된 데이터';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='인버터에서 측정된 데이터';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -616,6 +629,7 @@ CREATE TABLE `pw_inverter_data` (
 
 LOCK TABLES `pw_inverter_data` WRITE;
 /*!40000 ALTER TABLE `pw_inverter_data` DISABLE KEYS */;
+INSERT INTO `pw_inverter_data` VALUES (1,1,2.3,160,363,2,160,313,862.3,60.4,NULL,103000,'2018-08-22 15:59:33'),(2,2,2.3,179,410,2,164,330,804.9,60.4,NULL,103000,'2018-08-22 15:59:33'),(3,1,7.6,161,1226,7.2,153,1098,89.6,59.8,NULL,113000,'2018-08-22 16:02:57'),(4,2,6,190,1144,5.8,180,1035,90.5,59.9,NULL,115000,'2018-08-22 16:02:57'),(5,1,4.6,180,834,2.6,166,717,86,60.4,NULL,103000,'2018-09-20 10:24:42'),(6,2,4,175,702,0.8,168,185,26.4,60.4,NULL,107000,'2018-09-20 10:24:42'),(7,1,1.7,164,285,1.3,164,79,27.7,59.8,NULL,121000,'2018-09-20 10:26:20'),(8,2,5.8,161,931,6.4,170,362,38.9,60.1,NULL,127000,'2018-09-20 10:26:20'),(15,1,2.5,179,444,2.8,165,1169,263.3,59.9,NULL,104000,'2018-09-20 13:28:21'),(16,2,7.2,181,1306,4.9,162,792,60.6,60.4,NULL,106000,'2018-09-20 13:28:21'),(17,1,6.3,172,1083,0.8,180,1159,107,60.2,NULL,143000,'2018-09-20 13:36:00'),(18,2,7,170,1195,6.9,186,502,42,60.3,NULL,142000,'2018-09-20 13:36:00'),(19,1,3.7,182,674,5.8,165,120,17.8,60.2,NULL,182000,'2018-09-20 13:41:00'),(20,2,2.1,185,388,6,174,420,108.2,59.9,NULL,179000,'2018-09-20 13:41:00'),(21,1,6.8,164,1112,6.5,183,854,76.8,60.3,NULL,199000,'2018-09-20 13:42:00'),(22,2,0.3,165,55,6.5,174,1089,1980,60.4,NULL,199000,'2018-09-20 13:42:00'),(23,1,1.9,163,305,4.6,161,69,22.6,60.4,NULL,216000,'2018-09-20 13:43:00'),(24,2,3.3,189,621,1.5,168,845,136.1,59.8,NULL,217000,'2018-09-20 13:43:00'),(25,1,6.3,169,1064,6.5,179,483,45.4,60.4,NULL,233000,'2018-09-20 13:44:00'),(26,2,6.4,174,1112,4.5,155,1090,98,60.1,NULL,231000,'2018-09-20 13:44:00'),(27,1,2.7,190,509,6.4,172,751,147.5,60.4,NULL,250000,'2018-09-20 13:45:00'),(28,2,0.9,176,158,0.9,166,78,49.4,60.3,NULL,244000,'2018-09-20 13:45:00'),(29,1,2.7,161,439,4.2,168,301,68.6,60.2,NULL,266000,'2018-09-20 13:46:00'),(30,2,0.9,176,158,0.9,166,78,49.4,60.3,NULL,244000,'2018-09-20 13:46:00'),(31,1,2.7,161,439,4.2,168,301,68.6,60.2,NULL,266000,'2018-09-20 13:47:00'),(32,2,0.9,176,158,0.9,166,78,49.4,60.3,NULL,244000,'2018-09-20 13:47:00'),(33,1,2.7,161,439,4.2,168,301,68.6,60.2,NULL,266000,'2018-09-20 13:48:00'),(34,2,0.9,176,158,0.9,166,78,49.4,60.3,NULL,244000,'2018-09-20 13:48:00'),(35,1,2.7,161,439,4.2,168,301,68.6,60.2,NULL,266000,'2018-09-20 13:49:00'),(36,2,0.9,176,158,0.9,166,78,49.4,60.3,NULL,244000,'2018-09-20 13:49:00'),(37,1,2.7,161,439,4.2,168,301,68.6,60.2,NULL,266000,'2018-09-20 13:50:00'),(38,2,0.9,176,158,0.9,166,78,49.4,60.3,NULL,244000,'2018-09-20 13:50:00');
 /*!40000 ALTER TABLE `pw_inverter_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -637,7 +651,7 @@ CREATE TABLE `pw_inverter_trouble_data` (
   PRIMARY KEY (`inverter_trouble_data_seq`,`inverter_seq`),
   KEY `FK_PW_INVERTER_TO_PW_INVERTER_TROUBLE_DATA` (`inverter_seq`),
   CONSTRAINT `FK_PW_INVERTER_TO_PW_INVERTER_TROUBLE_DATA` FOREIGN KEY (`inverter_seq`) REFERENCES `pw_inverter` (`inverter_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='장치에서 에러가 검출될 경우 발생 및 해결 정보 저장';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='장치에서 에러가 검출될 경우 발생 및 해결 정보 저장';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -646,6 +660,7 @@ CREATE TABLE `pw_inverter_trouble_data` (
 
 LOCK TABLES `pw_inverter_trouble_data` WRITE;
 /*!40000 ALTER TABLE `pw_inverter_trouble_data` DISABLE KEYS */;
+INSERT INTO `pw_inverter_trouble_data` VALUES (1,1,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-08-22 15:59:34','2018-09-20 10:24:42'),(2,2,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-08-22 15:59:35','2018-09-20 10:24:42'),(3,1,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 10:26:20','2018-09-20 13:25:59'),(4,2,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 10:26:21','2018-09-20 13:25:59'),(5,1,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:28:22','2018-09-20 13:36:00'),(6,2,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:28:23','2018-09-20 13:36:00'),(7,1,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:41:00','2018-09-20 13:42:00'),(8,2,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:41:01','2018-09-20 13:42:00'),(9,1,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:43:00','2018-09-20 13:44:00'),(10,2,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:43:01','2018-09-20 13:44:00'),(11,1,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:45:00','2018-09-20 13:46:00'),(12,2,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:45:01','2018-09-20 13:46:00'),(13,1,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:47:06','2018-09-20 13:48:00'),(14,2,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:47:12','2018-09-20 13:48:00'),(15,1,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:49:06','2018-09-20 13:50:00'),(16,2,0,'시스템 과열(단상 95도, 삼상 85도)','OVER HEAT','2018-09-20 13:49:12','2018-09-20 13:50:00');
 /*!40000 ALTER TABLE `pw_inverter_trouble_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -772,7 +787,7 @@ CREATE TABLE `pw_relation_power` (
 
 LOCK TABLES `pw_relation_power` WRITE;
 /*!40000 ALTER TABLE `pw_relation_power` DISABLE KEYS */;
-INSERT INTO `pw_relation_power` VALUES (1,1,NULL,NULL,NULL,NULL),(1,2,NULL,NULL,NULL,NULL);
+INSERT INTO `pw_relation_power` VALUES (1,1,NULL,NULL,NULL,NULL),(1,2,NULL,NULL,NULL,NULL),(1,3,NULL,NULL,NULL,NULL),(1,4,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `pw_relation_power` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1589,4 +1604,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-21 18:29:51
+-- Dump completed on 2018-10-08 18:05:54
