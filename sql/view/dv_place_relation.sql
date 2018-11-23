@@ -2,7 +2,7 @@
 
 SELECT 
 			dpr.*,
-			vdn.node_id, vdn.node_real_id, vdn.node_name, 
+			vdn.node_id, vdn.node_real_id, vdn.node_name, vdn.data_unit,
 			vddl.dl_id, vddl.dl_name,
 			vdp.place_id, vdp.place_name,
 			vdp.pd_target_name, 
