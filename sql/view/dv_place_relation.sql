@@ -2,12 +2,13 @@
 
 SELECT 
 			dpr.*,
-			vdn.node_id, vdn.node_real_id, vdn.node_name, vdn.data_unit,
+			vdp.place_id, vdp.place_real_id, vdp.place_name, 
+			vdn.node_id, vdn.node_real_id, vdn.node_name,
 			vddl.dl_id, vddl.dl_name,
-			vdp.place_id, vdp.place_name,
-			vdp.pd_target_name, 
-			vdn.nc_target_name, vdn.nd_target_name, vdn.is_sensor,
-			vdn.nd_target_id, vdn.nc_target_id,
+      vdp.p_target_code, vdp.p_target_name, vdp.chart_color, vdp.chart_sort_rank,
+      vdn.data_unit, vdn.is_sensor, 
+			vdp.pc_target_id, vdp.pc_target_name, vdp.pd_target_id, vdp.pd_target_name, 
+			vdn.nc_target_id, vdn.nc_target_name, vdn.nd_target_id, vdn.nd_target_name,
 			vddl.serial_number,
 			vdn.main_seq, vdn.data_logger_seq
   FROM dv_place_relation dpr
