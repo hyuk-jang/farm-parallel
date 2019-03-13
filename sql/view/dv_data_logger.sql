@@ -1,5 +1,3 @@
-
-
 SELECT 
 			dl.data_logger_seq, dld.data_logger_def_seq, dl.main_seq,
 			CASE

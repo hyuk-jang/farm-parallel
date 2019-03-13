@@ -1,7 +1,7 @@
 SELECT
-      *,
       r_dsd.num_data AS node_data,
-      r_dsd.writedate
+      r_dsd.writedate,
+      vdn.*
 FROM v_dv_node vdn
 LEFT OUTER JOIN 
  (

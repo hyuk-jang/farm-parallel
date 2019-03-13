@@ -1,5 +1,3 @@
-
-
 SELECT 
 			dpr.*,
 			vdp.place_id, vdp.place_real_id, vdp.place_name, 
