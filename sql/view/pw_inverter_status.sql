@@ -1,7 +1,7 @@
 SELECT 
 	rp.place_seq,
 	id.*,
-	ROUND((power_total_kwh - (SELECT MAX(power_total_kwh) FROM pw_inverter_data WHERE inverter_seq = id.inverter_seq AND writedate>= CURDATE() - 1 AND writedate< CURDATE())), 1) AS daily_power_kwh,
+	ROUND((power_c_kwh - (SELECT MAX(power_c_kwh) FROM pw_inverter_data WHERE inverter_seq = id.inverter_seq AND writedate>= CURDATE() - 1 AND writedate< CURDATE())), 1) AS daily_power_kwh,
 	pv.amount AS pv_amount, pv.compose_count, pv.install_place AS install_place
 	FROM pw_inverter_data id
 	LEFT JOIN pw_inverter
