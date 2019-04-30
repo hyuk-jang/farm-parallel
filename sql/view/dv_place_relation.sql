@@ -2,6 +2,12 @@ SELECT
 			dpr.*,
 			vdp.place_id, vdp.place_real_id, vdp.place_name, 
 			vdn.node_id, vdn.node_real_id, vdn.node_name,
+      CASE
+          WHEN LENGTH(vdn.n_target_name) > 0
+            THEN CONCAT(vdp.pd_target_name, " ", vdn.nd_target_name, " ", vdn.n_target_name)
+          ELSE 
+            CONCAT(vdp.pd_target_name, " ", vdn.nd_target_name)
+          END AS place_node_name,
 			vddl.dl_id, vddl.dl_name,
       vdp.p_target_code, vdp.p_target_name, vdp.chart_color, vdp.chart_sort_rank,
       vdn.data_unit, vdn.is_sensor, 

@@ -43,7 +43,7 @@ SELECT
 			  CONCAT(dld.target_prefix)
 			END AS dl_name,			
       nc.data_unit, nc.save_db_type, nc.is_sensor, nd.is_avg_center, n.data_logger_index,
-  		n.target_code AS n_target_code,
+  		n.target_code AS n_target_code, n.target_name AS n_target_name,
 			nd.target_id AS nd_target_id,
 			nd.target_name AS nd_target_name,
 			nd.target_prefix AS nd_target_prefix,
