@@ -1,6 +1,6 @@
 SELECT 
 		ivt.*,
-		rp.photovoltaic_seq, rp.connector_seq, rp.connector_ch,
+		rp.pv_seq, rp.connector_seq, rp.connector_ch,
 		m.*
   FROM pw_inverter ivt
  LEFT OUTER JOIN pw_relation_power rp
