@@ -1,9 +1,7 @@
-
-
 SELECT
 			nd.node_def_seq,
 			nc.node_class_seq,
-      nc.data_unit, nc.save_db_type, nc.is_sensor, nd.is_avg_center,
+      nc.data_unit, nc.save_db_type, nc.is_sensor, nd.is_submit_api, nd.is_avg_center,
 			nd.target_id AS nd_target_id,
 			nd.target_name AS nd_target_name,
 			nd.target_prefix AS nd_target_prefix,

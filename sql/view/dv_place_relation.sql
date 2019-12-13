@@ -6,11 +6,11 @@ SELECT
           WHEN LENGTH(vdn.n_target_name) > 0
             THEN CONCAT(vdp.pd_target_name, " ", vdn.nd_target_name, " ", vdn.n_target_name)
           ELSE 
-            CONCAT(vdp.pd_target_name, " ", vdn.nd_target_name)
+            CONCAT(vdp.pd_target_name, " ", vdp.p_target_code, " ", vdn.nd_target_name)
           END AS place_node_name,
 			vddl.dl_id, vddl.dl_name,
       vdp.p_target_code, vdp.p_target_name, vdp.chart_color, vdp.chart_sort_rank,
-      vdn.data_unit, vdn.is_sensor, 
+      vdn.data_unit, vdn.is_sensor, vdn.is_submit_api,
 			vdp.pc_target_id, vdp.pc_target_name, vdp.pd_target_id, vdp.pd_target_name, 
 			vdn.nc_target_id, vdn.nc_target_name, vdn.nd_target_id, vdn.nd_target_name,
 			vddl.serial_number,
